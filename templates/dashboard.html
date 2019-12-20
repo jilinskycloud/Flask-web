@@ -1,63 +1,31 @@
-<html>
-  <head>
-    <title>Flask Intro - login page</title>
+{% extends 'layout.html' %}
+{% block title %}
+  Home
+{% endblock %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/jquery-3.4.1.slim.min.js') }}" ></script>
-<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/popper.min.js') }}" ></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.4.1/css/bootstrap.min.css') }}">
-
-<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/bootstrap.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">SKYCLOUD</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/devices">Devices</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/mqtt-console">MQTT-Console</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/http-console">HTTP Console</a>
-            </li>
-          <!--
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-          -->
-          </ul>
-          <a class="nav-link" href="/logout">Logout</a>
-          
-      <!--
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      -->
-      </div>
-    </nav>
+{% block content %}
+    <div class="alert alert-success container" role="alert">
+      <h4 class="alert-heading">Where does it come from?</h4>
+      <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p> <hr>
+      <p class="mb-0"><span class="border border-primary">This is the Reload time! {{ reload }}</span><br></p><hr>
+      <p class="mb-0"><span class="border border-secondary">This is the CPU testing! {{ cpu }}</span><br></p><hr>
+      <p class="mb-0"><span class="border border-success">This is the CPU Load! {{ cpu_load }}</span><br></p><hr>
+      <p class="mb-0"><span class="border border-warning">This is the CPU Freq! {{ cpu_freq }}</span><br></p><hr>
     </div>
-  </body>
-</html>
+    <!-- 
+      <h4>This is the stats testing! {{ stats }}</h4> 
+      <h4>This is the Total Memory! {{ ttl_memo }}</h4> 
+      <h4>This is the Swap Memo! {{ swp_memo }}</h4>
+      <h4>This is the NIC Address! {{ nic_addr }}</h4>  
+      <h4>This is the Device Temperature! {{ tmp }}</h4>
+      <h4>This is the Current User! {{ c_user }}</h4>
+    
+    <span class="border border-info"></span>
+    <span class="border border-light"></span>
+    <span class="border border-dark"></span>
+    <span class="border border-white"></span>
+  -->
+{% endblock %}
+
+
+

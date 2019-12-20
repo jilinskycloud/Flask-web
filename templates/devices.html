@@ -1,46 +1,63 @@
-<html>
-  <head>
-    <title>Flask Intro - login page</title>
-		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/jquery-3.4.1.slim.min.js') }}" ></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/popper.min.js') }}" ></script>
-		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-4.4.1/css/bootstrap.min.css') }}">
-		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/bootstrap.min.js') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
-	    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-	    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
-  </head>
+{% extends 'layout.html' %}
+{% block title %}
+  Devices
+{% endblock %}
 
- <body>
-
-<div class="container">
+{% block devices %}
+<div class="container dev_container">
+  <div class="dv_box">
+    <img src="{{ url_for('static', filename='img/device.png') }}">
+    <p><span class="blink">ID:</span></p>
+  </div>
+  
+</div>
   <div class="row">
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
+    <!--
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
     	<p><span class="blink">Connected</span></p>
     </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
     	<p><span class="blink">Connected</span></p>
     </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
-    	<p><span class="blink">Connected</span></p>   <!-- src="{{ url_for('static', filename='img/led.png')}}" -->
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
+    	<p><span class="blink">Connected</span></p>  
     </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
     	<p><span class="blink">Connected</span></p>
+    </div>
+  -->
+  </div>
+<!--
+  <div class="row">
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
+    	<p><span class="blink">Connected</span></p>
+    </div>
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
+    	<p><span class="blink">Connected</span></p>
+    </div>
+    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
+    	<p><span class="blink">Connected</span></p>
+    </div>
+    <div class="card" style="width: 15rem; height: 22rem">
+      <img src="{{ url_for('static', filename='img/device.png') }}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Device Id:: .....</h5>
+        <p class="card-text">IP:: ......</p>
+        <a href="#" class="btn btn-primary"><p><span class="blink">Connected</span></p></a>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.jpg') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
+-->
+</div>
+{% endblock %}
+
+
+
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
-</body>
-</html>
