@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 from flask import Flask
 from flask import escape
 from flask import url_for
@@ -21,28 +20,21 @@ from pymongo import MongoClient
 from OpenSSL import SSL
 import pprint
 # self made
-from _include.heartbeat import heartbeat as _hb
+from _include.heartbeat import MQTT_ as _mqtt
+from _include.heartbeat import HTTP_ as _http
 from _include.dbClasses import mysqldb as _mysql
 from _include.dbClasses import mongodb as _mongodb
 from _include.dbClasses import redisdb as _redis
 
-
+import json
 #import os
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-
-db = _mongodb.insert_(MongoClient, pymongo)
-mysql = _mysql.mysql_(MySQL, app)
-
+db    = _mongodb.initMongo_(MongoClient, pymongo)
+mysql = _mysql.initMysql_(MySQL, app)
 # ===================MQTT FUNCTIONS===========================
-_hb.connect_(Mqtt, app, _redis)
-
-#device = session['device']
-
-#print("______________-----------------------___________________")
-#print(device)
-
+_mqtt.connect_(Mqtt, app, _redis)
 # ===================OPENSSL FUNCTIONS========================
 #context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
 #context.use_privatekey_file('server.key')
@@ -60,40 +52,86 @@ def show_():
 
 @app.route('/del_db/<db_name>')                 # Del DB
 def delDB_(db_name):
-	_mongodb.delDB_(db_name)
+	_mongodb.delDB_(db_name, MongoClient)
 	return 'as'
 
 @app.route('/del_coll/<coll_name>')             # Del Collection
 def delColl_(coll_name):
-	_mongodb.delColl_(coll_name)
-	return 'as'
+	_mongodb.delColl_(coll_name, db)
+	return redirect(url_for('showColl_'))
 
-@app.route('/mongoColl')                       # Show Collection
-def showColl_():
-	collections = _mongodb.showColl_(db)
-	print(collections)
-	return render_template("mongoColl.html", collections=collections)
+@app.route('/showColl_/<collname>')                       # Show Collection
+@app.route('/showColl_',methods = ['POST', 'GET'])                       # Show Collection
+def showColl_(collname=None):
+    if request.method == 'POST':
+        data = [];
+        data.append(request.form['coll_name'])
+        data.append(request.form['dev_id'])
+        data.append(request.form['dev_ip'])
+        data.append(request.form['dev_mac'])
+        data.append(request.form['dev_rssi'])
+        data.append(request.form['dev_ext'])
+        data.append(request.form['dev_b'])
+        data.append(request.form['dev_c'])
+        print(data[0])
+        _mongodb.insert_(MongoClient, pymongo, data)
+    collections = _mongodb.showColl_(db)
+    print(collections)
+    return render_template("mongoColl.html", collections=collections)
+
+@app.route('/del_rec/<_id>/<collname>/')
+def delRec_(collname=None, _id=None):
+    print(collname)
+    print(_id)
+    print("------------cursor testing---------------")
+    collections = _mongodb.delRec_(collname, db, _id)
+    return redirect(url_for('mongoRec',collname=collname ))
 
 @app.route('/mongoRec/<collname>')                       # Show Collection
-def showRec_(collname):
-	collections = _mongodb.showColl_(db)
-	print(collections)
-	return render_template("mongoRec.html", collections=collections)
+def mongoRec(collname):
+    print(collname)
+    rec = _mongodb.showRec_(collname, db)
+    print("------------cursor testing---------------")
+    return render_template("mongoRec.html", coll=rec, collname=collname)
+
+
+
 
 # ===================HTTPLIB2 FUNCTIONS==========================
 @app.route('/http_data/<username>') #, methods=['GET', 'POST'])
 def http_data(username):
-	if(username):
-		name_ =  'User %s' % escape(username)
-		print(name_)
-		return 'success'
-	return 'No success'
+    if(username):
+        http_data =  'User %s' % escape(username)
+        print(http_data)
+        _http.connect_(http_data, app, _redis)
+        return 'success'
+    return 'No success'
+
+
+
 
 # ===================MYSQL FUNCTIONS==========================
 @app.route('/DB')
 def DB():
 	_mysql.DB_(mysql)
 	return 'success'
+
+@app.route('/delDB')
+def delDB():
+    _mysql.delDB_(mysql)
+    return 'success'
+
+@app.route('/initmysql/')
+def initmysql():
+    _mysql.initMysql_(MySQL, app)
+    return 'success'
+
+@app.route('/createDB')
+def createDB():
+    _mysql.createDB_(MySQL, app)
+    return 'success'
+
+
 
 # ===================HBEAT FUNCTIONS==========================
 @app.route('/beat/')
@@ -148,14 +186,38 @@ def dashboard():
 @app.route('/devices/')
 @app.route('/devices/<device>')
 def devices(device=None):
-    return render_template('devices.html',device=device)
+    if 'username' in session:
+        return render_template('devices.html',device=device)
+    else:
+        return redirect(url_for('login'))
+    
+
+# ============================================================SETUP
+@app.route('/setup',methods = ['POST', 'GET'])
+@app.route('/setup/',methods = ['POST', 'GET'])
+def setup():
+    if 'username' in session:   
+        print("this is setup page")
+        result = request.form.to_dict()
+        print(result)
+        with open("./tp.text", "w") as f:
+            json.dump(result, f, indent=4)
+        return render_template('setup.html')
+    else:
+        return redirect(url_for('login'))
 
 # ============================================================MQTT-CONSOLE
 @app.route('/mqtt-console')
 @app.route('/mqtt-console/')
-@app.route('/mqtt-console/<data>')
-def mqtt_on(data=None):
-    return render_template('mqtt-console.html', data=data)
+@app.route('/mqtt-console/<params>')
+def mqtt_on(params=None):
+    if 'username' in session:
+        print("1111111111111111111111111111111111111111111111111111111111")
+        print(params)
+        print("1111111111111111111111111111111111111111111111111111111111")
+        return render_template('mqtt-console.html', data=params)
+    else:
+        return redirect(url_for('login'))
 
 # =============================================================CMD LINE
 @app.route('/sendcmd/')
@@ -165,10 +227,35 @@ def sendcmd(name=None):
 	else:
 		return redirect(url_for('login'))
 
+# ============================================================UPDATE ADMIN DETAILS
+@app.route('/editProfile/', methods=['GET', 'POST'])
+def editProfile():
+    error = None
+    data = []
+    rec=[]
+    if 'username' in session:
+        if request.method == 'POST':
+            print("Posted********************************************")
+            #data.append(request.form['name_p'])
+            data.append(request.form['name'])
+            data.append(request.form['pass'])
+            print(data)
+            print(_mysql.editProfile_(mysql, data))
+            rec = _mysql.show_(mysql)
+            print(rec)
+        rec = _mysql.show_(mysql)
+        print(rec)
+        return render_template('editProfile.html', error=error, data=data, rec=rec)
+    else:
+        return redirect(url_for('login'))
+
+
+
 # ============================================================LOGIN PAGE
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+    print(_mysql.initLogin_(mysql))
     if request.method == 'POST':
         u_name = request.form['username']
         u_pass = request.form['password']

@@ -2,9 +2,45 @@
 {% block mongorec %}
 
 <div class="container" style="padding: 5px;">
-	<h4>Collections</h4>
-	<a href="http://192.168.1.74:5000/mongoRec/{{collections}}">{{collections}}</a>
-  
+	<br>
+
+	<table class="table table-hover">
+
+		<thead>
+			<tr><h3>Record Details...</h3></tr>
+    		<tr>
+      			<th scope="col">#</th>
+      			<th scope="col" style="display:none;">_ID</th>
+      			<th scope="col">ID</th>
+      			<th scope="col">RSSI</th>
+      			<th scope="col">MAC</th>
+      			<th scope="col">IP</th>
+      			<th scope="col">Exta_b</th>
+      			<th scope="col">Extra_c</th>
+      			<th scope="col">EXT</th>
+      			<th scope="col">EDIT</th>
+      			<th scope="col">DELETE</th>
+    		</tr>
+  		</thead>
+  		<tbody>
+  			{% for rec in coll %}
+			<tr>
+				<th scope="row">{{ loop.index }}</th>
+				<td style="display:none;">{%  print(rec['_id']) %}</td>
+				<td>{%  print(rec['_Did']) %}</td>
+				<td>{%  print(rec['_rssi']) %}</td>
+				<td>{%  print(rec['_mac']) %}</td>
+				<td>{%  print(rec['_ip'])%}</td>
+				<td>{{  rec['_b'] }}</td>
+				<td>{{  rec['_c'] }}</td>
+				<td>{%  print(rec['_ext']) %}</td>
+				<td><a href="#" class="badge badge-primary">Edit</a></td>
+				<td><a href="http://192.168.1.74:5000/del_rec/{{ rec['_id'] }}/{{ collname }}" class="badge badge-danger">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<br><br>
 </div>
 
 

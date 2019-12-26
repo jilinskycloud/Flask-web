@@ -2,6 +2,7 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>{% block title %}{% endblock %} - SkyCloud Web</title>
   <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/jquery-3.4.1.slim.min.js') }}" ></script>
   <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-4.4.1/js/popper.min.js') }}" ></script>
@@ -16,7 +17,11 @@
     {% block content %}{% endblock %}
     {% block devices %}{% endblock %}
     {% block mqttconsol %}{% endblock %}
+    {% block cmdLine %}{% endblock %}
+    {% block config %}{% endblock %}
+    {% block editProfile %}{% endblock %}
     {% block mongorec %}{% endblock %}
+
     {% include 'footer.html' %}
 </body>
 </html>
