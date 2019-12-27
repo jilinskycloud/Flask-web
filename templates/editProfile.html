@@ -3,14 +3,8 @@
 
 <br>
 <div class="container">
+  <br>
 <form class="container" action = "/editProfile/" method = "POST">
-<br>
-  <div class="form-row">
-    <div class="col">
-      <input type="text" name="name_p" class="form-control" placeholder="User Name">
-    </div>
-  </div>
-<br>
   <div class="form-row">
     <div class="col">
       <input type="text" name="name" class="form-control" placeholder="Login Name">
@@ -50,14 +44,14 @@
       <tr>
         <th scope="row">{{ loop.index }}</th>
         <td>
-          <a href="http://192.168.1.74:5000/mongoRec/{{coll}}" class="badge badge-light">{{ coll[0]}}</a>
-          <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
-        </td>
-        <td>
           <a href="http://192.168.1.74:5000/mongoRec/{{coll}}" class="badge badge-light">{{ coll[1]}}</a>
           <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
         </td>
-        <td><a href="http://192.168.1.74:5000/del_coll/{{coll}}" class="badge badge-danger">Delete</a></td>
+        <td>
+          <a href="http://192.168.1.74:5000/mongoRec/{{coll}}" class="badge badge-light">{{ coll[2]}}</a>
+          <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
+        </td>
+        <td><a href="http://192.168.1.74:5000/delProfile/{{coll[0]}}" class="badge badge-danger">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>

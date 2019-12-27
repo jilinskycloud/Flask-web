@@ -111,25 +111,16 @@ def http_data(username):
 
 
 # ===================MYSQL FUNCTIONS==========================
-@app.route('/DB')
-def DB():
-	_mysql.DB_(mysql)
+@app.route('/createModel')
+def createModel():
+	_mysql.createModel_(MySQL, app)
 	return 'success'
 
-@app.route('/delDB')
-def delDB():
-    _mysql.delDB_(mysql)
-    return 'success'
-
-@app.route('/initmysql/')
-def initmysql():
-    _mysql.initMysql_(MySQL, app)
-    return 'success'
-
-@app.route('/createDB')
-def createDB():
-    _mysql.createDB_(MySQL, app)
-    return 'success'
+@app.route('/delProfile/<ids>')
+def delProfile(ids=None):
+    _mysql.delProfile_(mysql, ids)
+    print("deleted..")
+    return redirect(url_for('editProfile'))
 
 
 
@@ -236,7 +227,6 @@ def editProfile():
     if 'username' in session:
         if request.method == 'POST':
             print("Posted********************************************")
-            #data.append(request.form['name_p'])
             data.append(request.form['name'])
             data.append(request.form['pass'])
             print(data)
@@ -255,7 +245,7 @@ def editProfile():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    print(_mysql.initLogin_(mysql))
+    #print(_mysql.initLogin_(mysql))
     if request.method == 'POST':
         u_name = request.form['username']
         u_pass = request.form['password']
