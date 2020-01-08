@@ -4,60 +4,87 @@
 {% endblock %}
 
 {% block devices %}
-<div class="container dev_container">
-  <div class="dv_box">
-    <img src="{{ url_for('static', filename='img/device.png') }}">
-    <p><span class="blink">ID:</span></p>
+
+<br>
+<div class="container">
+  <!--
+  <br>
+<form class="container" action = "/editProfile/" method = "POST">
+  <div class="form-row">
+    <div class="col">
+      <input type="text" name="name" class="form-control" placeholder="Login Name">
+    </div>  
   </div>
-  
-</div>
-  <div class="row">
-    <!--
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>  
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-  -->
-  </div>
-<!--
-  <div class="row">
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="col"><img src="{{ url_for('static', filename='img/device.png') }}">
-    	<p><span class="blink">Connected</span></p>
-    </div>
-    <div class="card" style="width: 15rem; height: 22rem">
-      <img src="{{ url_for('static', filename='img/device.png') }}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Device Id:: .....</h5>
-        <p class="card-text">IP:: ......</p>
-        <a href="#" class="btn btn-primary"><p><span class="blink">Connected</span></p></a>
-      </div>
+<br>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" name="pass" class="form-control" placeholder="Password">
     </div>
   </div>
+<br>
+  <div class="form-row">
+    <div class="col">
+      <input type="text"  class="form-control" placeholder="Re-Enter Password">
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 -->
-</div>
-{% endblock %}
+<br>
+  <table class="table table-hover" id="tbl-cntr_">
 
+    <thead>
+      <tr><h3>Registered Devices:</h3></tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Device ID:</th>
+            <th scope="col">Time:</th>
+            <th scope="col">EXTRA:</th>
+            <th scope="col">STATUS:</th>
+            <th scope="col">DELETE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for coll in device %}
+      <tr class="tbl_tr">
+        <th scope="row">{{ loop.index }}</th>
+        <td>
+          <p class="badge badge-primary"><i class="fas fa-band-aid fa-3x"></i></p><br>
+          <a href="{{coll}}" class="badge badge-light"><span class='coll_id'>{{ coll['_id']}}</span></a>
+          <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
+        </td>
+        <td>
 
-
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+<form action="/sendcmd_" method="POST">
+<p class="badge badge-light" id="tm">
+<div class="input-group mb-3">
+  <input type="text" class="form-control" name="cmd" placeholder="Enter Your Command" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <input class="form-control" name="ip" value="{{ coll['extra']}}" type="hidden">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send >></button>
   </div>
+</div></p>
+</form>
+          <!--<p class="badge badge-light" id="tm">{{ coll['time']}}</p>
+           <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
+        </td>
+       
+       <td>
+          <p class="badge badge-light">{{ coll['extra']}}</p>
+          <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
+        </td>
+       
+        <td class='success_error'>
+          <!-- <p class="badge badge-success"><i class="fas fa-laugh-wink fa-3x"></i></p> -->
+          <p class="badge badge-secondary"><i class="fas fa-sad-tear fa-3x"></i></p>
+        </td>
+        <td><a href="/delDevice/{{coll['_id']}}" class="badge badge-danger">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
+<br>
+
+{% endblock %}

@@ -55,3 +55,11 @@ html, body {
     background-color: black;
     color: white;
 }
+
+#tbl-cntr_{
+    text-align: center;
+}
+
+.badge-secondary {
+    background-color: #1d9008 !IMPORTANT;
+}

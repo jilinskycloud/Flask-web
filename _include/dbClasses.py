@@ -209,6 +209,14 @@ class redisdb:
 		r.hset(s_key_n, 1,'val')
 		r.expire(s_key_n, 10)
 		#print(r.hgetall(key_n))
+	'''
+	def createHB_(data):
+		print("-----------------------------------------------in ccreateHB-REDIS\n")
+		tm_k = time.time()
+		r.hmset(data[0], {'_tm':tm_k, '_ext':data[2]})
+		r.expire(data[0], 10)
+		print(r.hgetall(tm_k))
+	'''	
 
 	def print_():
 		print("huuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu----------haaaaaaaaaaaa\n")

@@ -9,9 +9,28 @@
 <h3>Manual Insert:</h3>
 <form class="container" action = "/showColl_" method = "POST">
 	<div class="form-row">
-		<div class="col">
-			<input type="text" name="coll_name" class="form-control" placeholder="Collection Name">
-		</div>
+
+
+<select class="form-control" name="coll_name" id="exampleFormControlSelect1" placeholder="Collection Name">
+
+{% for coll in collections %}
+
+
+
+      <option>{{coll}}</option>
+{% endfor %}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
   	</div>
 <br>
     <div class="form-row">

@@ -11,6 +11,46 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.4.1.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+  {{ fontawesome_html() }}
+
+
+  <script type="text/javascript">
+  setInterval(function(){
+      $.ajax({
+            url: '/status',
+            type: "post",
+       
+            success: function (m) {
+              console.log(m);
+    
+              for(var i=0;i<$(".tbl_tr").length;i++){
+                console.log($(".tbl_tr").find(".coll_id").eq(i));
+                 var each_index = m.indexOf($(".tbl_tr").find(".coll_id").text());
+                 //有
+                 console.log(each_index);
+                 $(this).parents('.tbl_tr').find('.success_error').empty();
+                 if(m.indexOf($(".tbl_tr").find(".coll_id").eq(i).text()) != -1){
+                  console.log("绿",$(".tbl_tr").find(".badge-secondary").children())
+                    $(".tbl_tr").find(".badge-secondary").children().eq(i).removeClass();
+                    $(".tbl_tr").find(".badge-secondary").children().eq(i).addClass("fas fa-laugh-wink fa-3x");
+                    // $(this).parents('.tbl_tr').find('.success_error').append("<p class='badge badge-success'><i class='fas fa-laugh-wink fa-3x'></i></p>");
+                 }else{
+                  console.log("红",$(".tbl_tr").find(".badge-secondary").children())
+                    $(".tbl_tr").find(".badge-secondary").children().eq(i).removeClass();
+                    $(".tbl_tr").find(".badge-secondary").children().eq(i).addClass("fas fa-sad-tear fa-3x");
+                    // $(this).parents('.tbl_tr').find('.success_error').append("<p class='badge badge-secondary'><i class='fas fa-sad-tear fa-3x'></i></p>");
+                 }
+              }
+            },         
+           error: function () { alert("数据错误!"); }, //如果弹窗跳出，代表服务端路径错误，或服务端出错，或服务端没有返回指定的json数据格式
+      });
+      //$('table #tm').load('/status');
+ },5000);
+
+
+
+
+</script>
 </head>
 <body>
     {% include 'nav_bar.html' %}
