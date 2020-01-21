@@ -12,13 +12,18 @@ class mongodb:
 		db = client["ble_data"] 
 		dbs = client.list_database_names()
 		data_ = {}
-		#convert dinary dictionary
+		#convert binary dictionary
 		for key, value in data.items(): 
 			data_[key.decode("utf-8")] = value.decode("utf-8") 
-		r_dat = { '_Did' :data_['_id'], '_ip' :data_['_ip'], '_mac' : data_['_mac'], '_rssi':data_['_rssi'], '_ext':data_['_ext'], '_b' : 0, '_c' : 0 }    
+		#print("here im in mongo db hehehehehehe")
+		print(data_)
+		r_dat = { '_Did' :data_['_uuid'], '_mac' : data_['_mac'], '_rssi':data_['_rssi'], '_adv':data_['_adv'], '_maj':data_['_maj'], '_min':data_['_min'], '_tx':data_['_tx'] }
+		print(r_dat)
+		#r_dat = { '_Did' :data_['_id'], '_ip' :data_['_ip'], '_mac' : data_['_mac'], '_rssi':data_['_rssi'], '_ext':data_['_ext'], '_b' : 0, '_c' : 0 }    
 		result=db.ble.insert_one(r_dat).inserted_id
 		print("---------------BLE Data Inserted -MongoDb---------------")
 		print(result)
+		
 
 	def initMongo_(MongoClient, pymongo):
 		client = MongoClient("mongodb://localhost:27017/")
@@ -34,7 +39,7 @@ class mongodb:
 		#dbs = client.database_names()		#List DBS
 		#print(dbs).decode("utf-8")
 		print(data)
-		r_dat = { '_Did' :data[1], '_ip' :data[2], '_mac' : data[3], '_rssi':data[4], '_ext':data[5], '_b' :data[6], '_c' :data[7] } 
+		r_dat = { '_Did' :data[1], '_mac' :data[2], '_rssi' : data[3], '_adv':data[4], '_maj':data[5], '_min' :data[6], '_tx' :data[7] } 
 		result=db[data[0]].insert_one(r_dat).inserted_id
 		print("---------------Insert into -MongoDb---------------")
 		return 'ok'
@@ -189,6 +194,9 @@ class redisdb:
 				print(s.decode("utf-8")) 
 
 	def create_(data):
+		print("-----------------------------------------------ssssssssssssssss\n")
+		#print(data)
+		'''
 		da = data.split('|')
 		print(da)
 		print(da[0])
@@ -200,15 +208,17 @@ class redisdb:
 		print("-----------------------------------------------ssssssssssssssss\n")
 		print(_id)
 		print(_mac)
+		'''
 		tm_k = time.time()
 		s_key_n = 's_'+str(tm_k)
-		print(tm_k)
-		print(s_key_n)
-		r.hmset(tm_k, {'_id':_id, '_mac':_mac, '_rssi':_rssi, '_ext':_ext, '_ip':_ip})
-		print(r.hgetall(tm_k))
+		#print(tm_k)
+		#print(s_key_n)
+		r.hmset(tm_k, {'_uuid':data['uuid'], '_mac':data['mac'], '_rssi':data['rssi'], '_adv':data['adv'], '_tx':data['tx'], '_maj':data['maj'], '_min':data['min']})
+		#print(r.hgetall(tm_k))
 		r.hset(s_key_n, 1,'val')
 		r.expire(s_key_n, 10)
 		#print(r.hgetall(key_n))
+		
 	'''
 	def createHB_(data):
 		print("-----------------------------------------------in ccreateHB-REDIS\n")

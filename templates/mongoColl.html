@@ -16,8 +16,9 @@
 {% for coll in collections %}
 
 
-
+      {% if coll != 'system.indexes' and coll != 'reg_devices' %}
       <option>{{coll}}</option>
+      {% endif %}
 {% endfor %}
     </select>
 
@@ -35,28 +36,28 @@
 <br>
     <div class="form-row">
     	<div class="col">
-      		<input type="text" name="dev_id" class="form-control" placeholder="ID">
+      		<input type="text" name="uuid" class="form-control" placeholder="UUID">
     	</div>
     	<div class="col">
-      		<input type="text" name="dev_ip" class="form-control" placeholder="IP Address">
+      		<input type="text" name="mac" class="form-control" placeholder="MAC ADDRESS">
     	</div>
     	<div class="col">
-      		<input type="text" name="dev_mac" class="form-control" placeholder="MAC Address">
+      		<input type="text" name="rssi" class="form-control" placeholder="RSSI">
     	</div>
   	</div>
   	<br>
     <div class="form-row">
     	<div class="col">
-      		<input type="text" name="dev_rssi" class="form-control" placeholder="RSSI">
+      		<input type="text" name="adv" class="form-control" placeholder="ADV">
     	</div>
     	<div class="col">
-      		<input type="text" name="dev_ext" class="form-control" placeholder="Extra">
+      		<input type="text" name="maj" class="form-control" placeholder="MAJOR">
     	</div>
+      <div class="col">
+          <input type="text" name="min" class="form-control" placeholder="MINOR">
+      </div>
     	<div class="col">
-      		<input type="text" name="dev_b" class="form-control" placeholder="B">
-    	</div>
-    	<div class="col">
-      		<input type="text" name="dev_c" class="form-control" placeholder="C">
+      		<input type="text" name="tx" class="form-control" placeholder="TX">
     	</div>
   	</div>
 <br>
@@ -80,15 +81,23 @@
   		<tbody>
 
   		{% for coll in collections %}
+        {% if coll != 'system.indexes' %}
 			<tr>
 				<th scope="row">{{ loop.index }}</th>
+
 				<td>
-					<a href="http://192.168.1.74:5000/mongoRec/{{coll}}" class="badge badge-light">{{coll}}</a>
+          {% if coll == 'reg_devices' %}
+            <a href="http://192.168.1.74:5000/devices/" class="badge badge-light">{{coll}}</a>
+          {% else %}
+				    <a href="http://192.168.1.74:5000/mongoRec/{{coll}}" class="badge badge-light">{{coll}}</a>
 					<!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
-				</td>
+				  {% endif %}
+        </td>
+        
 				<td><a href="#" class="badge badge-primary">Edit</a></td>
 				<td><a href="http://192.168.1.74:5000/del_coll/{{coll}}" class="badge badge-danger">Delete</a></td>
 			</tr>
+      {% endif %}
 			{% endfor %}
 		</tbody>
 	</table>

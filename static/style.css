@@ -63,3 +63,8 @@ html, body {
 .badge-secondary {
     background-color: #1d9008 !IMPORTANT;
 }
+#sendcmd_{
+    background-color: #eaeaea;
+    /* margin: auto; */
+    padding: 36px;
+}

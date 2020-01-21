@@ -2,6 +2,14 @@ import redis
 import requests
 import time
 
+from Crypto.PublicKey import RSA
+from Crypto.Random import get_random_bytes
+from Crypto.Cipher import AES, PKCS1_OAEP
+import json
+
+
+
+
 class MQTT_:
 	def connect_(Mqtt, app, _redis):
 		app.config['MQTT_BROKER_URL'] = 'localhost'
@@ -22,14 +30,83 @@ class MQTT_:
         		payload=message.payload.decode(),
         	)
 			print("Ble Data Message")
-			print(data['payload'])
-			_redis.create_(data['payload'])
+			print("==================================================================================================")
+			#print(data['payload'])
+			a = data['payload']
+			d = json.loads(a)
+			ciptext = bytes.fromhex(d['ciptext'])
+			tag = bytes.fromhex(d['tag'])
+			nonce = bytes.fromhex(d['nonce'])
+			dp = dec(nonce, ciptext, tag)
+			print(dp)
+			print("==================================================================================================")
+			_redis.create_(dp)
 
 			#r = requests.get('http://192.168.1.74:5000/mqtt-console/', params='abc')
 			#print(r.text)
 			#print(r.url)
 
 			print("Working!!!!!!!! ")
+
+
+
+def dec(nonce, ciptext, tag):
+	key = b'\xa5}\x9a\xee\xf1Q\x1e\x93\x18\xb6\xc9\t\x1c&\xad\x05'
+	cipher = AES.new(key, AES.MODE_EAX, nonce)
+	data = cipher.decrypt_and_verify(ciptext, tag)
+	#print(data)
+	return data_split(data)
+
+def data_split(data):
+	a = data.decode()
+	a = a.split()
+	#print(a)
+	mac_ = [3,4,5,6,7,8]
+	rssi_ = [9]
+	adv_ = [10,11,12,13,14,15,16,17,18]
+	uuid_ = [19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]
+	maj_ = [35,36]
+	min_ = [37,38]
+	tx_ = [39]
+	st = ""
+	mac = st.join(list(map(a.__getitem__, mac_)))
+	rssi = st.join(list(map(a.__getitem__, rssi_)))
+	adv = st.join(list(map(a.__getitem__, adv_)))
+	uuid = st.join(list(map(a.__getitem__, uuid_)))
+	maj = st.join(list(map(a.__getitem__, maj_)))
+	mina = st.join(list(map(a.__getitem__, min_)))
+	tx = st.join(list(map(a.__getitem__, tx_)))
+	received = {'mac':mac, 'rssi':rssi, 'adv':adv, 'uuid':uuid, 'maj':maj, 'min':mina, 'tx':tx}
+	return received
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class HTTP_:
 	def connect_(http_data, app, _redis):
@@ -39,24 +116,13 @@ class HTTP_:
 
 
 class heartBeat_:
-	def hd_insert(MongoClient, pymongo, hbD, _redis):
+	def hb_insert(MongoClient, pymongo, hbD, _redis):
 		
 		client = MongoClient("mongodb://localhost:27017/")
 		db = client["ble_data"] 
-		data = hbD.split('|')
-		_sr  = data[0]
-		_ip  = data[1]
-		_ext = data[2]
-		#dbs = client.list_database_names()
-		#data_ = {}
-		#convert binary dictionary
-		#for key, value in data.items(): 
-		#	data_[key.decode("utf-8")] = value.decode("utf-8") 
-		#print(_redis.createHB_(data))
+		_sr  = hbD['sr']
+		_ip  = hbD['ip']
 		tm_k = time.time()
-		#tm_k1 = tm_k+5
-		#tm_k2 = tm_k+10
-		#tm_k3 = tm_k-25
 		if( db.reg_devices.find_one({"_id": _sr}) == None):
 			r_dat = { '_id' :_sr, 'time' :tm_k, 'extra' : _ip}    
 			result=db.reg_devices.insert_one(r_dat)
@@ -64,9 +130,6 @@ class heartBeat_:
 		else:
 			print("Already Exist")
 			db.reg_devices.update_one({'_id': _sr},{'$set': {'time': tm_k, 'extra': _ip}}, upsert=False)
-			#db.reg_devices.update_one({'_id': "000000002"},{'$set': {'time': tm_k1}}, upsert=False)
-			#db.reg_devices.update_one({'_id': "000000003"},{'$set': {'time': tm_k2}}, upsert=False)
-			#db.reg_devices.update_one({'_id': "000000004"},{'$set': {'time': tm_k3}}, upsert=False)  
 		print("---------------HB Data Inserted -MongoDb---------------")
 		return "OK"
 

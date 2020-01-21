@@ -7,41 +7,17 @@
 
 <br>
 <div class="container">
-  <!--
-  <br>
-<form class="container" action = "/editProfile/" method = "POST">
-  <div class="form-row">
-    <div class="col">
-      <input type="text" name="name" class="form-control" placeholder="Login Name">
-    </div>  
-  </div>
-<br>
-  <div class="form-row">
-    <div class="col">
-      <input type="text" name="pass" class="form-control" placeholder="Password">
-    </div>
-  </div>
-<br>
-  <div class="form-row">
-    <div class="col">
-      <input type="text"  class="form-control" placeholder="Re-Enter Password">
-    </div>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
--->
 <br>
   <table class="table table-hover" id="tbl-cntr_">
 
     <thead>
-      <tr><h3>Registered Devices:</h3></tr>
+      <tr><label>Registered Devices:</label>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Device ID:</th>
-            <th scope="col">Time:</th>
-            <th scope="col">EXTRA:</th>
+            <th scope="col">IP:</th>
             <th scope="col">STATUS:</th>
+            <th scope="col">Gateway Web:</th>
             <th scope="col">DELETE</th>
         </tr>
       </thead>
@@ -53,23 +29,7 @@
           <p class="badge badge-primary"><i class="fas fa-band-aid fa-3x"></i></p><br>
           <a href="{{coll}}" class="badge badge-light"><span class='coll_id'>{{ coll['_id']}}</span></a>
           <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
-        </td>
-        <td>
-
-<form action="/sendcmd_" method="POST">
-<p class="badge badge-light" id="tm">
-<div class="input-group mb-3">
-  <input type="text" class="form-control" name="cmd" placeholder="Enter Your Command" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <input class="form-control" name="ip" value="{{ coll['extra']}}" type="hidden">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send >></button>
-  </div>
-</div></p>
-</form>
-          <!--<p class="badge badge-light" id="tm">{{ coll['time']}}</p>
-           <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
-        </td>
-       
+        </td>   
        <td>
           <p class="badge badge-light">{{ coll['extra']}}</p>
           <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
@@ -79,6 +39,7 @@
           <!-- <p class="badge badge-success"><i class="fas fa-laugh-wink fa-3x"></i></p> -->
           <p class="badge badge-secondary"><i class="fas fa-sad-tear fa-3x"></i></p>
         </td>
+        <td><a href="http://{{ coll['extra']}}:5000" class="badge badge-success">Access</a></td>
         <td><a href="/delDevice/{{coll['_id']}}" class="badge badge-danger">Delete</a></td>
       </tr>
       {% endfor %}
@@ -86,5 +47,11 @@
   </table>
 </div>
 <br>
+
+
+
+
+
+
 
 {% endblock %}
