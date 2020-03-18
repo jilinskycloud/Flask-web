@@ -1,0 +1,276 @@
+html, body {
+  font-family: Raleway, sans-serif;  
+  background-color: whitesmoke;
+}
+
+
+
+.container-sm{
+	width: 35%;
+    BACKGROUND-COLOR: #b5b5b512;
+    MARGIN-TOP: 8%;
+    border-radius: 5px;
+}
+
+
+.dv_box{
+    width: 107px;
+    height: 122px;
+    background-color: #f1f1f1;
+    text-align: center;
+}
+.dv_box img{
+    width: 77px;
+    height: 90px;
+}
+
+.card-img img{
+    height: 139px;
+    width: 110px;
+}
+
+
+
+.console_{
+    background-color: black;
+    color: white;
+}
+
+#tbl-cntr_{
+    text-align: center;
+}
+
+
+#sendcmd_{
+    /* background-color: #eaeaea; */
+    /* margin: auto; */
+    padding: 36px;
+}
+
+.fa-laugh-wink{
+    background-color: #1d9008 !IMPORTANT;
+}
+
+.fa-sad-tear{
+    background-color: #ff0018 !IMPORTANT;
+}
+
+#tuti_div {
+    text-align: right;
+}
+
+#tuti_div nav{
+    display: inline-block;
+}
+
+#c_follow{
+    background-color: #dc3545;
+    color: white;
+    font-family: monospace;
+        text-align: right;
+}
+#c_follow_links{
+    padding: 5px;
+    margin-right: 2%;
+}
+#c_follow_links a{
+    margin-right: 10px;
+}
+#c_logout{
+color: rgba(0,0,0,.5);
+    margin-right: 4%;
+}
+#c_logout:hover{
+    color: rgba(0,0,0,.7);
+}
+
+.fa-2x{
+    color: #e9ecef;
+}
+
+.fa-2x:hover {
+        /* Use your color here (!important will force it to use this color for any FA elements */
+    text-shadow: 0 0 3px #ffffff !importanttransform: scale(1.1);
+color:white;
+}
+#c_mainImg{
+object-fit: cover;
+}
+#c_mainImg img{
+    height: 58vh;
+width: 100%;
+
+}
+
+
+
+/*==================== 
+    Login
+====================== */
+#_login{
+
+}
+
+
+/*==================== 
+    Devices
+====================== */
+
+#_devices{
+background-color: #6c757d;
+    color: white;
+        padding: 30px;
+    font-size: larger;
+
+}
+
+.tbl_tr p{
+	margin-bottom: 5px;
+}
+
+
+/*==================== 
+    Mongo Collection page
+====================== */
+
+#_mongocoll{
+	text-align: center;
+}
+
+
+/*==================== 
+    Mongo Records page
+====================== */
+
+#_mongorec table{
+	text-align: center !important;
+}
+
+#setup_page form h6{
+	text-align: left !important;
+}
+
+.happy{
+	color:white;
+	padding: 5px !important;
+	border-radius: 7px;
+}
+.sad{
+	padding: 5px !important;
+	color: white;
+	border-radius: 7px;
+}
+
+
+#_editPro{
+	text-align: center;
+}
+
+/*==================== 
+    Footer 
+====================== */
+.footer_{
+    background-color: #1d2124 !important;
+    color: white;
+    padding: 40px;
+}
+.footer_ ul{
+    display: grid;
+}
+.footer_ ul li{
+        margin-bottom: 2px;
+}
+
+.footer_ ul li a{
+    margin-left: 5%;
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+        width: max-content;
+        font-size: smaller;
+    margin-bottom: 7px;
+}
+
+.footer_ ul li a:hover{
+    margin-left: 6%;
+    color:#00ec36;
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+.footer_ ul h5{
+    color: #ffc107;
+        font-family: -webkit-body;
+}
+
+.col-md-4 {
+    text-align: center !important;
+}
+.col-md-4 img {
+    vertical-align: middle;
+    border-style: none;
+    width: 174px;
+    height: 80px;
+}
+
+#c_end{
+    background-color: #dc3545; 
+    color: white;
+       
+}
+#c_end .row{
+	padding: 5px;
+	 font-size: smaller;
+}
+
+
+.footer_ ul li p{
+color: white; /* #007bff; */
+    display: inline-flex;
+    font-family: monospace;
+}
+
+
+.v-divider{
+    background-color: #7d7d7d !important;
+    width: 1px !important;
+}
+
+.foot_follow_fb{
+	color: white;
+}
+
+.foot_follow_fb:hover{
+	color:#0040ba !important;
+	/*background-color: white; */
+}
+
+.foot_follow_ln{
+	color: white;
+}
+
+.foot_follow_ln:hover{
+	color: #2867B2 !important;
+}
+
+
+.foot_follow_wi{
+	color: white;
+}
+
+.foot_follow_wi:hover{
+	color: #d62b2a !important;
+}
+
+.foot_follow_tw{
+	color: white;
+}
+
+.foot_follow_tw:hover{
+	color: #1DA1F2 !important;
+}
+
+.footer_border{
+	padding: 1px;
+	background-color: #dc3545;
+}

@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+{% block mongorec %}
+<div class="container-fluid" id="_devices">DataBase Collections /</div>
+
+
+<br>
+<div class="container-fluid" >
+<h3>Insert Record:</h3>
+<form class="container-fluid" action = "/showColl_" method = "POST">
+	<div class="form-row">
+
+
+<select class="form-control" name="coll_name" id="exampleFormControlSelect1" placeholder="Collection Name">
+
+{% for coll in collections %}
+
+
+      {% if coll != 'system.indexes' and coll != 'reg_devices' %}
+      <option>{{coll}}</option>
+      {% endif %}
+{% endfor %}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+  	</div>
+<br>
+    <div class="form-row">
+    	<div class="col">
+      		<input type="text" name="uuid" class="form-control" placeholder="UUID">
+    	</div>
+    	<div class="col">
+      		<input type="text" name="mac" class="form-control" placeholder="MAC ADDRESS">
+    	</div>
+    	<div class="col">
+      		<input type="text" name="rssi" class="form-control" placeholder="RSSI">
+    	</div>
+  	</div>
+  	<br>
+    <div class="form-row">
+    	<div class="col">
+      		<input type="text" name="adv" class="form-control" placeholder="ADV">
+    	</div>
+    	<div class="col">
+      		<input type="text" name="maj" class="form-control" placeholder="MAJOR">
+    	</div>
+      <div class="col">
+          <input type="text" name="min" class="form-control" placeholder="MINOR">
+      </div>
+    	<div class="col">
+      		<input type="text" name="tx" class="form-control" placeholder="TX">
+    	</div>
+  	</div>
+<br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+<br>
+</form>
+<br>
+
+<br>
+	<table class="table table-hover" id="_mongocoll">
+
+		<thead>
+			<tr><h3>Collections List:</h3></tr>
+    		<tr>
+      			<th scope="col">#</th>
+      			<th scope="col">Collection Name</th>
+      			<!-- <th scope="col">EDIT</th> -->
+      			<th scope="col">DELETE</th>
+    		</tr>
+  		</thead>
+  		<tbody>
+
+  		{% for coll in collections %}
+        {% if coll != 'system.indexes' %}
+			<tr>
+				<th scope="row">{{ loop.index }}</th>
+
+				<td>
+          {% if coll == 'reg_devices' %}
+            <a href="/devices/" class="badge badge-light">{{coll}}</a>
+          {% else %}
+				    <a href="/mongoRec/{{coll}}" class="badge badge-light">{{coll}}</a>
+					<!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
+				  {% endif %}
+        </td>
+        
+				<!-- <td><a href="#" class="badge badge-primary">Edit</a></td> -->
+				<td><a href="/del_coll/{{coll}}" class="badge badge-danger"><i class="far fa-trash-alt fa-2x"></i></a></td>
+			</tr>
+      {% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+	<br><br>
+</div>
+
+
+{% endblock %}

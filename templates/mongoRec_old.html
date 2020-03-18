@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block mongorec %}
+
+<div class="container" style="padding: 5px;">
+	<br>
+
+	<table class="table table-hover">
+		<thead>
+			<tr><h3>Record Details...</h3></tr>
+    		<tr>
+      			<th scope="col">#</th>
+      			<th scope="col" style="display:none;">_ID</th>
+      			<th scope="col">Gateway SN.</th>
+      			<th scope="col">UUID</th>
+      			<th scope="col">Time Stamp</th>
+      			<th scope="col">MAC</th>
+      			<th scope="col">RSSI</th>
+      			<th scope="col">ADV</th>
+      			<th scope="col">Maj/Min</th>
+      			<th scope="col">TX</th>
+      			<th scope="col">DELETE</th>
+    		</tr>
+  		</thead>
+  		<tbody>
+  			{% for rec in coll %}
+			<tr>
+				<th scope="row">{{ loop.index }}</th>
+				<td style="display:none;">{%  print(rec['_id']) %}</td>
+				<td>{%  print(rec['_sr']) %}</td>
+				<td>{%  print(rec['_Did']) %}</td>
+				<td>{%  print(rec['_times']) %}</td>
+				<td>{%  print(rec['_mac']) %}</td>
+				<td>{%  print(rec['_rssi']) %}</td>
+				<td>{%  print(rec['_adv'])%}</td>
+				<td>0x{{  rec['_maj'] }}:0x{{ rec['_min'] }}</td>
+				<td>{{  rec['_tx'] }}</td>
+				<td><a href="/del_rec/{{ rec['_id'] }}/{{ collname }}" class="badge badge-danger">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<br><br>
+</div>
+
+
+{% endblock %}

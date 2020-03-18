@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block cmdLine %}
+<div class="container-fluid" id="_devices">Send Command /</div>
+
+
+<br>
+<div class="container-fliud"><br>
+	<form action="/sendcmd_" method="POST">
+  		<div id="sendcmd_">
+    		<h3>Select Device to send command:</h3>
+      		<div class="input-group">
+				<div class="form-group">
+    				<select class="form-control" id="exampleFormControlSelect1" name="ip">
+    					{% for coll in device %}
+      						<option value="{{ coll['extra']}}">{{ coll['_id']}}</option>
+      					{% endfor %}
+    				</select>
+  				</div>
+			</div>
+			<input type="text" class="form-control" name="cmd" placeholder="Enter Your Command"><br>
+			<button type="submit" class="btn btn-primary">Send Command >></button>
+		</div>
+	</form><br>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+Flask
+typing
+paho-mqtt

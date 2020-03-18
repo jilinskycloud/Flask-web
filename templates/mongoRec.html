@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+{% block mongorec %}
+<div class="container-fluid" id="_devices">BLE Records /</div>
+<div class="container-fluid" id="_mongorec">
+  <br>
+
+  <table class="table table-hover">
+    <thead>
+      <tr><h3>Record Details...</h3></tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" style="display:none;">_ID</th>
+            <th scope="col">Gateway SN.</th>
+            <th scope="col">UUID</th>
+            <th scope="col">Time Stamp</th>
+            <th scope="col">MAC</th>
+            <th scope="col">RSSI</th>
+            <th scope="col">ADV</th>
+            <th scope="col">Maj/Min</th>
+            <th scope="col">TX</th>
+            <th scope="col">DELETE</th>
+        </tr>
+      </thead>
+      <tbody id="feedback">
+    </tbody>
+  </table>
+<!-- <div id="test"></div> -->
+  <div id="tuti_div" class="container-fluid">
+    <nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'><a class='page-link' href='#'><<</a></li><span id="tuti" style="display: contents;"></span>
+      <li class='page-item'><a class='page-link' href='#'>>></a></li></ul></nav>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  load_data();
+  function load_data(page)
+  {
+    console.log("in ajax",page)
+    $.ajax({
+      url:"/get_mongoRec",
+      method:"GET",
+      data:{page:page},
+      success:function(data_){
+        //console.log(typeof(data1))
+        data1 = data_['1']
+        console.log("this is the rec ::",data1)
+        pagi = data_['2']
+        var colname = '{{ colname }}';
+        console.log("Thos is the lkfkshdkfshdhfkusdhf::::",colname);
+        console.log("nuber is pagess",pagi)
+        console.log(data1.length);
+        for (var i = 0; i < data1.length; i++) {
+            data = JSON.parse(data1[i]);
+            console.log(Object.keys(data));
+            a = i+1
+
+            $('#feedback').append('<tr><td>' + a + '</td><td>' + data._sr + '</td><td>' + data._Did + '</td><td>' + data._times + '</td><td>' + data._mac + '</td><td>' + data._rssi + '</td><td>' + data._adv + '</td><td>' + data._maj+" : "+data._min + '</td><td>' + data._tx + "</td><td><a href=/del_rec/"+data._id.$oid+"/"+colname+" class='badge badge-danger'>" + "<i class='far fa-trash-alt fa-2x'></i>" + "</a></td></tr>");
+
+        }
+        for (var i =0; i<pagi; i++){
+          v= i+1;
+            //$('#test').append("<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='"+ v +"'>"+ v +"</span>");
+            var nv = "<li class='page-item pagination_link' id="+ v +"><a class='page-link' href='#'>"+v+"</a></li>";
+            $('#tuti').append(nv);
+            console.log("paginations",i)
+        }
+      }
+    })
+  }
+  $(document).on('click', '.pagination_link', function(){  
+     document.getElementById("feedback").innerHTML = "";
+     //document.getElementById("test").innerHTML = "";
+     document.getElementById("tuti").innerHTML = "";
+           var page = $(this).attr("id");  
+           console.log("sdsdddsdddddddddddddddddddd",page);
+           load_data(page);  
+      }); 
+})
+
+</script>
+
+
+
+
+
+
+
+
+ 
+{% endblock %}
