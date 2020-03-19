@@ -41,7 +41,7 @@ class mongodb:
 		#dbs = client.database_names()		#List DBS
 		#print(dbs).decode("utf-8")
 		print(data)
-		r_dat = { '_Did' :data[1], '_mac' :data[2], '_rssi' : data[3], '_adv':data[4], '_maj':data[5], '_min' :data[6], '_tx' :data[7] } 
+		r_dat = { '_Did' :data[1], '_mac' :data[2], '_rssi' : data[3], '_adv':data[4], '_maj':data[5], '_min' :data[6], '_tx' :data[7], '_sr':data[8], '_times':data[9] } 
 		result=db[data[0]].insert_one(r_dat).inserted_id
 		print("---------------Insert into -MongoDb---------------")
 		return 'ok'
@@ -198,7 +198,7 @@ class mysqldb:
 
 	def delProfile_(mysql, ids):
 		cur = mysql.connection.cursor()    
-		cur.execute("DELETE FROM login_ where id= %s", (ids))
+		cur.execute("DELETE FROM login_ where id= %s", (ids,))
 		mysql.connection.commit()
 		cur.close()
 		print("---------------Delete Profile -MYSQLDB---------------")

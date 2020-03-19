@@ -6,7 +6,7 @@
 
   <table class="table table-hover">
     <thead>
-      <tr><h3>Record Details...</h3></tr>
+      <!-- <tr><h3>Record Details...</h3></tr> -->
         <tr>
             <th scope="col">#</th>
             <th scope="col" style="display:none;">_ID</th>
@@ -26,10 +26,13 @@
   </table>
 <!-- <div id="test"></div> -->
   <div id="tuti_div" class="container-fluid">
-    <nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'><a class='page-link' href='#'><<</a></li><span id="tuti" style="display: contents;"></span>
-      <li class='page-item'><a class='page-link' href='#'>>></a></li></ul></nav>
+    <nav aria-label='Page navigation example'><ul class='pagination'><li class='page-item'></li><span id="tuti" style="display: contents;"></span>
+      <li class='page-item'></li></ul></nav>
+        <div id="tpg"></div>
   </div>
+
 </div>
+
 
 
 <script type="text/javascript">
@@ -56,19 +59,43 @@ $(document).ready(function(){
             console.log(Object.keys(data));
             a = i+1
 
-            $('#feedback').append('<tr><td>' + a + '</td><td>' + data._sr + '</td><td>' + data._Did + '</td><td>' + data._times + '</td><td>' + data._mac + '</td><td>' + data._rssi + '</td><td>' + data._adv + '</td><td>' + data._maj+" : "+data._min + '</td><td>' + data._tx + "</td><td><a href=/del_rec/"+data._id.$oid+"/"+colname+" class='badge badge-danger'>" + "<i class='far fa-trash-alt fa-2x'></i>" + "</a></td></tr>");
+            $('#feedback').append('<tr><td>' + a + '</td><td>' + data._sr + '</td><td>' + data._Did.toUpperCase() + '</td><td>' + data._times + '</td><td>' + data._mac.toUpperCase() + '</td><td>' + data._rssi + '</td><td>' + data._adv.toUpperCase() + '</td><td>' + data._maj.toUpperCase() +" : "+data._min.toUpperCase() + '</td><td>' + data._tx + "</td><td><a href=/del_rec/"+data._id.$oid+"/"+colname+" class='badge badge-danger'>" + "<i class='far fa-trash-alt fa-2x'></i>" + "</a></td></tr>");
 
         }
+        if (typeof(page) == "undefined" || page <= 5){ 
+          var min_page = 0; 
+          var max_page = 10; 
+        }else{
+          var min_page = parseInt(page) - 5; 
+          var max_page = parseInt(page) + 5;
+        }
+        var left = "<li class='page-item pagination_link' id='1'><a class='page-link' href='#'><<</a></li>"
+        $('#tuti').append(left);
         for (var i =0; i<pagi; i++){
-          v= i+1;
+            v= i+1;
+            // alert(i);
             //$('#test').append("<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='"+ v +"'>"+ v +"</span>");
-            var nv = "<li class='page-item pagination_link' id="+ v +"><a class='page-link' href='#'>"+v+"</a></li>";
-            $('#tuti').append(nv);
+            if(i>=min_page && i <max_page){
+              if(v == page){
+                  var check_style = "color:#b2bac3";
+              }else{
+                 var check_style = "";
+              }
+              var nv = "<li class='page-item pagination_link' id="+ v +"><a class='page-link' href='#' style="+check_style+">"+v+"</a></li>";
+              $('#tuti').append(nv);
+            }
             console.log("paginations",i)
         }
+        var right = "<li class='page-item pagination_link' id='"+data_['2']+"'><a class='page-link' href='#'>>></a></li>"
+        $('#tuti').append(right);
+
+        tpg = "Total Records:"+data_['3']+"   |   Total Pages:"+data_['2'];
+        $('#tpg').empty();
+        $('#tpg').append(tpg);
       }
     })
   }
+  
   $(document).on('click', '.pagination_link', function(){  
      document.getElementById("feedback").innerHTML = "";
      //document.getElementById("test").innerHTML = "";

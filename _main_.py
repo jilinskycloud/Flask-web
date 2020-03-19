@@ -14,6 +14,7 @@ from flask_mysqldb import MySQL
 import psutil
 import time
 import pymongo
+from flask import flash
 from pymongo import MongoClient
 from OpenSSL import SSL
 import pprint
@@ -66,7 +67,10 @@ def showColl_(collname=None):
         data.append(request.form['maj'])
         data.append(request.form['min'])
         data.append(request.form['tx'])
-        print(data[0])
+        data.append(request.form['sr'])
+        data.append(time.time())
+        print(data)
+        flash("Inserted Successfully")
         _mongodb.insert_(MongoClient, pymongo, data)
     collections = _mongodb.showColl_(db)
     print(collections)
@@ -126,7 +130,7 @@ def get_mongoRec():
 	print("Total number of pages :: ",total_pages)
 	rec_1 = [json.dumps(item, default=json_util.default) for item in rec_]
 	print("---------------Show Records -MongoDb---------------")
-	dat = {1: rec_1, 2: total_pages} 
+	dat = {1: rec_1, 2: total_pages, 3: total_rec_, 4: start_from, 5: end_from } 
 	return jsonify(dat)
 # ===================--------------------==========================
 # ===================--------------------==========================
@@ -388,6 +392,7 @@ def setup():
 			encrypt()
 			decrypt()
 			genfile()
+			flash("File Generated")
 			return send_file('/mnt/Flask_web/conf_/config_t.text', as_attachment=True)
 		#return send_from_directory(directory="./conf_", filename="config_t.text")
 		return render_template('setup.html')
@@ -467,6 +472,7 @@ def editProfile():
 			print(_mysql.editProfile_(mysql, data))
 			rec = _mysql.show_(mysql)
 			print(rec)
+			flash("Inserted Successfully")
 		rec = _mysql.show_(mysql)
 		print(rec)
 		return render_template('editProfile.html', error=error, data=data, rec=rec)

@@ -7,16 +7,16 @@
 	<div class="form-row">
          <div class="col-md-4">
         <h6>Server Socket:</h6>
-          <input type="text" name="server_socket" class="form-control" placeholder="i.e. 127.0.0.1:5000 ">
+          <input type="text" name="server_socket" class="form-control" placeholder="i.e. 127.0.0.1:5000" required>
       </div>
 		<div class="col-md-4">
           <h6>Cache Size</h6>
-			<input type="text" name="cache_size" class="form-control" placeholder="i.e. 12">
+			<input type="text" name="cache_size" class="form-control" placeholder="i.e. 12" required>
 		</div>
 
 		<div class="col-md-4">
       <h6>RSSI Range</h6>
-			<input type="text" name="rssi_range"class="form-control" placeholder="-50 | -90">
+			<input type="text" name="rssi_range"class="form-control" placeholder="-50 | -90" required>
 		</div>
 
   </div>
@@ -25,15 +25,15 @@
     <div class="form-row">
             <div class="col-md-4">
           <h6>Serial No:</h6>
-          <input type="text" name="serial_no" class="form-control" placeholder="0000000001">
+          <input type="text" name="serial_no" class="form-control" placeholder="0000000001" required>
       </div>
       <div class="col-md-4">
         <h6>User Name:</h6>
-        <input type="text" name="gw_uname" class="form-control" placeholder="admin ">
+        <input type="text" name="gw_uname" class="form-control" placeholder="admin" required>
       </div>
       <div class="col-md-4">
           <h6>Password:</h6>
-          <input type="text" name="gw_pass" class="form-control" placeholder="12345">
+          <input type="text" name="gw_pass" class="form-control" placeholder="12345" required>
       </div>
     </div>
     <br>
@@ -41,16 +41,15 @@
 <br>
       <div class="col-md-4">
           <h6>Interval:</h6>
-          <input type="text" name="data_interval" class="form-control" placeholder="10 sec">
+          <input type="text" name="data_interval" class="form-control" placeholder="10 sec" required>
       </div>
     </div>
  <br>
 <div class="form-row">
       <div class="col-md-4">
           <h6>Sniffer Type:</h6>
-    <select class="form-control" name="sniffer_type" id="exampleFormControlSelect1" placeholder="Select">
-      <option selected="">----</option>
-      <option>IBeacon</option>
+    <select class="form-control" name="sniffer_type" id="exampleFormControlSelect1" placeholder="Select" required>
+      <option selected="IBeacon">IBeacon</option>
       <option>Wifi</option>
     </select>
     </div>
@@ -60,9 +59,8 @@
 <div class="form-row">
       <div class="col-md-4">
           <h6>Heart Beat:</h6>
-    <select class="form-control" name="heart_beat" id="exampleFormControlSelect1" placeholder="Select">
-      <option selected="">----</option>
-      <option>on</option>
+    <select class="form-control" name="heart_beat" id="exampleFormControlSelect1" placeholder="Select" required>
+      <option selected="on">on</option>
       <option>off</option>
     </select>
     </div>
@@ -72,9 +70,8 @@
 <div class="form-row">
       <div class="col-md-4">
           <h6>Post Data:</h6>
-    <select class="form-control" name="enable_post_data" id="exampleFormControlSelect1" placeholder="Select">
-      <option selected="">----</option>
-      <option>on</option>
+    <select class="form-control" name="enable_post_data" id="exampleFormControlSelect1" placeholder="Select" required>
+      <option selected="off">off</option>
       <option>off</option>
     </select>
     </div>
@@ -86,14 +83,13 @@
       <div class="col-md-4">
           <h6>Protocol</h6>
     <select class="form-control" name="protoc" id="exampleFormControlSelect1" placeholder="Select">
-      <option selected="">----</option>
-      <option>MQTT</option>
+      <option selected="MQTT">MQTT</option>
       <option>HTTP</option>
     </select>
     </div>
 </div>
 <br>
-	<fieldset disabled>
+	<fieldset disabled hidden="">
     	<div class="form-group">
       		<h6>Public Key</h6>
       		<input type="text" id="disabledTextInput" class="form-control" name="pubkey" value="/check/public.key" placeholder="/check/public.key">
@@ -103,5 +99,12 @@
 <br>
 </form>
 <br>
+</div>
+ <div class="container" style="min-height:100% width:80%" id="alert_message" hidden>
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-success at-{{category}}" role="alert">
+      <b>{{message}}</b>
+    </div>
+  {% endfor %}
 </div>
 {% endblock %}

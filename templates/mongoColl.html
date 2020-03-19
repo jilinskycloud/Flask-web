@@ -34,29 +34,32 @@
   	</div>
 <br>
     <div class="form-row">
+      <div class="col">
+          <input type="text" name="sr" class="form-control" placeholder="Sr. No" required>
+      </div>
     	<div class="col">
-      		<input type="text" name="uuid" class="form-control" placeholder="UUID">
+      		<input type="text" name="uuid" class="form-control" placeholder="UUID" required>
     	</div>
     	<div class="col">
-      		<input type="text" name="mac" class="form-control" placeholder="MAC ADDRESS">
+      		<input type="text" name="mac" class="form-control" placeholder="MAC ADDRESS" required>
     	</div>
     	<div class="col">
-      		<input type="text" name="rssi" class="form-control" placeholder="RSSI">
+      		<input type="text" name="rssi" class="form-control" placeholder="RSSI" required>
     	</div>
   	</div>
   	<br>
     <div class="form-row">
     	<div class="col">
-      		<input type="text" name="adv" class="form-control" placeholder="ADV">
+      		<input type="text" name="adv" class="form-control" placeholder="ADV" required>
     	</div>
     	<div class="col">
-      		<input type="text" name="maj" class="form-control" placeholder="MAJOR">
+      		<input type="text" name="maj" class="form-control" placeholder="MAJOR" required>
     	</div>
       <div class="col">
-          <input type="text" name="min" class="form-control" placeholder="MINOR">
+          <input type="text" name="min" class="form-control" placeholder="MINOR" required>
       </div>
     	<div class="col">
-      		<input type="text" name="tx" class="form-control" placeholder="TX">
+      		<input type="text" name="tx" class="form-control" placeholder="TX" required>
     	</div>
   	</div>
 <br>
@@ -101,7 +104,14 @@
 		</tbody>
 	</table>
 	<br><br>
-</div>
 
+</div>
+ <div class="container" style="min-height:100% width:80%" id="alert_message">
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-success at-{{category}}" role="alert">
+      <b>{{message}}</b>
+    </div>
+  {% endfor %}
+</div>
 
 {% endblock %}

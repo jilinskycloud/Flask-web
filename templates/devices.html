@@ -61,7 +61,7 @@
       <tr class="tbl_tr">
         <th scope="row">{{ loop.index }}</th>
         <td>
-          <p class="badge badge-primary"><i class="fas fa-band-aid fa-3x"></i></p><br>
+          <p class="badge badge-primary"><i class="fas fa-band-aid fa-2x"></i></p><br>
           <span>{{ coll['_id']}}</span>
           <a href="{{coll}}" class="badge badge-light" style="display: none;"><span class='coll_id'>{{ coll['_id']}}</span></a>
           <!-- <a href="http://192.168.1.74/mongoRec/{{collections}}">{{collections}}</a> -->
@@ -73,7 +73,7 @@
        
         <td class='success_error'>
           <!-- <p class="badge badge-success"><i class="fas fa-laugh-wink fa-3x"></i></p> -->
-          <p class="badge badge-sec"><i class="fas fa-sad-tear fa-3x sad"></i></p>
+          <div class="badge badge-sec"><i class="fas fa-sad-tear fa-3x sad"></i></div>
         </td>
         <td><a href="http://{{ coll['extra']}}:5000" class="badge badge-success"><i class="fas fa-globe fa-2x"></i></a></td>
         <td><a href="/delDevice/{{coll['_id']}}" class="badge badge-danger"><i class="far fa-trash-alt fa-2x"></i></a></td>

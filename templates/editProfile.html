@@ -7,23 +7,23 @@
 <form class="container-fluid" action = "/editProfile/" method = "POST">
   <div class="form-row">
     <div class="col">
-      <input type="text" name="name" class="form-control" placeholder="Login Name">
+      <input type="text" name="name" class="form-control" placeholder="Login Name" required>
     </div>  
   </div>
 <br>
   <div class="form-row">
     <div class="col">
-      <input type="text" name="pass" class="form-control" placeholder="Password">
+      <input type="Password" name="pass" class="form-control" id="pass" placeholder="Password" required>
     </div>
   </div>
 <br>
   <div class="form-row">
     <div class="col">
-      <input type="text"  class="form-control" placeholder="Re-Enter Password">
+      <input type="Password"  class="form-control" id="c_pass" placeholder="Re-Enter Password" required>
     </div>
   </div>
   <br>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick="return submitData()">Submit</button>
 </form>
 
 <br>
@@ -57,11 +57,37 @@
   </table>
 
 
+<div class="container" style="min-height:100% width:80%" id="alert_message">
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-success at-{{category}}" role="alert">
+      <b>{{message}}</b>
+    </div>
+  {% endfor %}
+</dir>
 
-
-
+</div>
 
 </div>
 <br>
+<script type="text/javascript">
+  function submitData(){
+    var pass = document.getElementById("pass").value;
+    var c_pass = document.getElementById("c_pass").value;
+
+    if(pass == c_pass){
+      console.log(pass);
+      return true;
+
+    }else{
+      console.log("Password is not same try again");
+      console.log(pass);
+      console.log(c_pass);
+      alert("Entered Password not Same! Try Again!");
+      return false;
+
+    }
+  }
+  
+</script>
 
 {% endblock %}

@@ -274,3 +274,27 @@ color: white; /* #007bff; */
 	padding: 1px;
 	background-color: #dc3545;
 }
+
+
+
+/*###################
+Flash Message 
+####################*/
+
+#alert_message{
+position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
+#tpg{
+    text-align: right; 
+    margin-bottom: 15px;
+    /* margin-right: 34px;   */ 
+}
